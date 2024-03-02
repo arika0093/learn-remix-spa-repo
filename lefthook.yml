@@ -6,12 +6,6 @@ pre-commit:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       run: npx biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git update-index --again
     # run remix build
-    build:
-      run: npm run build
+    # build:
+    #   run: npm run build
 
-# pre-push:
-#   follow: true
-#   commands:
-#     build:
-#       run: npm run build
-      
