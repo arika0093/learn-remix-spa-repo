@@ -40,9 +40,10 @@ jobs:
 
     - name: Install Dependencies
       run: npm install
-
     - name: Build
       run: npm run build 
+    - name: Copy index.html to 404.html (for SPA support on GitHub Pages)
+      run: cp build/client/index.html build/client/404.html
 
     - name: Setup Pages
       uses: actions/configure-pages@v3
