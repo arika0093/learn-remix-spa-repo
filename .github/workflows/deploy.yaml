@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@latest
 
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@latest
       with:
         node-version: '20'
 
     - name: Cache npm install and build
-      uses: actions/cache@v3
+      uses: actions/cache@latest
       with:
         path: ~/.npm
         key: ${{ runner.os }}-node-${{ hashFiles('**/client/package-lock.json') }}
@@ -30,7 +30,20 @@ jobs:
       run: npm run build
 
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@latest
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/client
+
+  build-devcontainer:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout (GitHub)
+        uses: actions/checkout@latest
+
+      - name: Build and run dev container task
+        uses: devcontainers/ci@latest
+        with:
+          # Change this to be your CI task/script
+          runCmd: echo hello
