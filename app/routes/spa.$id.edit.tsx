@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Form, redirectDocument, useLoaderData } from "@remix-run/react";
+import { Form, redirect, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { getPostDetails, updatePostDetails } from "~/models/posts";
 
@@ -15,7 +15,8 @@ export async function clientAction({ params, request }: ActionFunctionArgs) {
 	const formData = await request.formData();
 	const updates = Object.fromEntries(formData);
 	await updatePostDetails(params.id, updates);
-	return redirectDocument(`/spa/${params.id}`);
+	// return null;
+	return redirect(`/spa/${params.id}`);
 }
 
 export default function FromList() {

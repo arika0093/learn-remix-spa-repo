@@ -15,16 +15,16 @@ import {
 	IconTable,
 	IconUser,
 } from "@tabler/icons-react";
-import React from "react";
 import { useAtom } from "jotai";
 import { Image } from "lucide-react";
+import React from "react";
 import { darkModeAtom } from "~/models/local";
 
 export function IndexPage({ children }: { children: React.ReactNode }) {
 	const [isDarkMode, setDarkMode] = useAtom(darkModeAtom);
 
 	return (
-		<div className="h-screen flex flex-col w-full">
+		<div className="h-svh flex flex-col w-full">
 			<header className="flex h-16 gap-1 items-center border-b bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm px-4 md:px-6">
 				<div className="flex items-center gap-4 lg:gap-8">
 					<Link
@@ -75,14 +75,14 @@ export function IndexPage({ children }: { children: React.ReactNode }) {
 							</Link>
 							<Link
 								className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium"
-								to="/from-list"
+								to="/spa"
 							>
 								<IconTable className="w-5" />
 								一覧から探す
 							</Link>
 							<Link
 								className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium"
-								to="/from-images"
+								to="/spa?search=image"
 							>
 								<Image className="w-5" />
 								画像から探す
