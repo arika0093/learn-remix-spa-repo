@@ -1,3 +1,4 @@
+import { IndexPage } from "@/components/index-page";
 import {
 	Links,
 	Meta,
@@ -5,11 +6,11 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from "@remix-run/react";
-import "./globals.css";
-import React from "react";
 import { useAtomValue } from "jotai";
+import React from "react";
+import "./globals.css";
 import { darkModeAtom } from "./models/local";
-import { IndexPage } from "@/components/index-page";
+import "./scrollbar.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const darkMode = useAtomValue(darkModeAtom);

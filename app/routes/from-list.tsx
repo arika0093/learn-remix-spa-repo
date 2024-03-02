@@ -1,16 +1,8 @@
 import { Link, useLoaderData } from "@remix-run/react";
-
-type Post = {
-	userId: number;
-	id: number;
-	title: string;
-	body: string;
-};
+import { getPostList } from "~/models/posts";
 
 export async function clientLoader() {
-	const datas = await fetch("https://jsonplaceholder.typicode.com/posts");
-	const json: Post[] = await datas.json();
-	return json;
+	return getPostList();
 }
 
 export default function FromList() {

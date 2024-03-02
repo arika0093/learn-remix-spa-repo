@@ -1,40 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
-import { Form, redirectDocument, useLoaderData } from "@remix-run/react"
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { Form, redirectDocument, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-type PostDetails = {
-	userId: number
-	id: number
-	title: string
-	body: string
-}
+import { getPostDetails, updatePostDetails } from "~/models/posts";
 
 export async function clientLoader({ params }: LoaderFunctionArgs) {
 	invariant(params.id, "Missing id param");
-	const datas = await fetch(
-		`https://jsonplaceholder.typicode.com/posts/${params.id}`
-	)
-	const json: PostDetails = await datas.json()
-	return json
+	return getPostDetails(params.id);
 }
 
 export async function clientAction({ params, request }: ActionFunctionArgs) {
 	invariant(params.id, "Missing id param");
 	const formData = await request.formData();
 	const updates = Object.fromEntries(formData);
-	await fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`, {
-		method: 'PUT',
-		body: JSON.stringify(updates),
-		headers: {
-			'Content-type': 'application/json; charset=UTF-8',
-		},
-	})
-	return redirectDocument(`/spa/${params.id}`)
+	await updatePostDetails(params.id, updates);
+	return redirectDocument(`/spa/${params.id}`);
 }
 
 export default function FromList() {
-	const data = useLoaderData<typeof clientLoader>()
+	const data = useLoaderData<typeof clientLoader>();
 
 	return (
 		<div className="p-2">
@@ -42,12 +27,9 @@ export default function FromList() {
 				<Form method="POST">
 					<Input type="text" name="title" defaultValue={data.title} />
 					<Input name="body" defaultValue={data.body} />
-					<Button variant="default">
-						Save
-					</Button>
+					<Button variant="default">Save</Button>
 				</Form>
 			</div>
 		</div>
-	)
+	);
 }
-

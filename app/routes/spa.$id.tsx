@@ -1,34 +1,23 @@
 import { Button } from "@/components/ui/button";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react"
+import { Form, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
-type PostDetails = {
-	userId: number
-	id: number
-	title: string
-	body: string
-}
+import { getPostDetails } from "~/models/posts";
 
 export async function clientLoader({ params }: LoaderFunctionArgs) {
 	invariant(params.id, "Missing id param");
-	const datas = await fetch(
-		`https://jsonplaceholder.typicode.com/posts/${params.id}`
-	)
-	const json: PostDetails = await datas.json()
-	return json
+	return getPostDetails(params.id);
 }
 
 export default function FromList() {
-	const data = useLoaderData<typeof clientLoader>()
+	const data = useLoaderData<typeof clientLoader>();
 
 	return (
 		<div className="p-2">
 			<div className="flex flex-col gap-1">
 				<div>
 					<Form action="edit">
-						<Button variant="default">
-							Edit
-						</Button>
+						<Button variant="default">Edit</Button>
 					</Form>
 					{/* <Button variant="default">
 						<Link to={`/spa/${data.id}/edit`}>Edit</Link>
@@ -38,6 +27,5 @@ export default function FromList() {
 				<p>{data.body}</p>
 			</div>
 		</div>
-	)
+	);
 }
-
